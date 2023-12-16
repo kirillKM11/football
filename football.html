@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=d8PQZ8Pp0_ChmYDxti5qso65-0Hrc_0rPI2_kbSvwXcNUnoTI29r0WzgSL0GYmOr9En5OsCtxifs4Ekt7fIeLhj587EfveGy3njJCq1ZtwICny2IzWeCHW-mLjODf8DY66FYy_jPnRUdIPpw1bUpatMo4OMLJ6y0sLGEeFLXieZLCEB-QDZrKUdXJ8XaRZxnLgPCwc0KaNmbt1H80K40jDCt2HmJKn1_gC_BoZtHb965MT7l6_pfNYAc1csGE521acRSa3AAjOyLbqLKYkS0UHQzAm2wBitO5QZnxwHVyhdTf-NuFzP4DQK0eKC0eOTvi1vLNNq9BE7pzvOcKlMXy3evhPLdUZO67t4zBEmZ1JKa-vBDuZ11OZUn2q0ZfHZVVOQxAeN9rwjjJ-lcFmYdTKFduTEHSg2ICJSwD68DJd8y_1DMovng7ujxACbKXl4vJBWxp-jBQVanJKk-tvcBye2Y0k7Sa3R53FfJBGNTr9pF47DzU56fHF2Aw0mb-8mN60xM1jWhRb25g8o9UJ4jESW8BIThXjqgRd_bMrgcX3yQx3nrN6n2XXMRWXa-nSkqbGOn67PQtqB61YBDzJMqKVY0Ae6n-FK6KlrQOgCjQpYvyy_gJ3bdeyYQRuTIQWwcpXqMC5meYdwa550MMgzyuMBU9mGVmhD-Wyh-HMv77gdVYN-AYap4NKstQ-1pE9_LKc2GGeKUBZHSOs5mvYHzANOt99xVg4A9W6HP7bldIm1qUbG0-JHQhJhTTQRXA7CRsATBTHceXQHYEfoPzxXCjk664mJRF-qGuiBfosF3JEZN7Im9YPRY0RDt0VHpJJUVb6SQ_EqkFmNWSgNCHxuhR3rbihZPBtts14sHH6QEASM_b3Oj-1m1w6QUHsn02HeLJ211EyDqgZXDpNjLj-dzRwXQL7h0XWmeBwFM3s0Zd0VAxcuFT1wu4C9BY_lLOCAJCbcIoJQiD-lc7RGvdkOoyxIBidOzj7RGk_rrPlr4rUpmqihIgoX6tyT1Fboh-Lvlf5x9HG_fmvktyffV3UDqdFZo58OhLz1GcwCZY48w8xBf4YsiPkWh7Jpp9ZbAIkFRP_7bBiNZ8Tl3UPS3MG_UyYF_B6L-49zI3J1JCJDI9WByt8oR64DlyFR9JNTwUI_W_I8S0gBSEcjKxVRbSLnfQciX7osIBDpeQ0on5H9pGV2VzAqxOqxl3jcNSW93qQzOICpAA_DLEB2F2qUUzvlL7UgEgIeWLCQ-xsDGIkI-aSBlwv0Omz__y0ctqp6hD1uY6cU5GAQ9V82ukEcZocSST_68CrI-1YXyejEnsmSW7Xa3TnC3XvCAP0kcTFc1bE3b-ozQBOweIPVElLOijdlaRIcK_FM12_f0NAR8r1vfq4eHyTfy8w63_hKaZ8hOtFnC9di_ul9HJH-q9PL-ZSZDZSTTRHHWy3E-sau9lUCUUtIUxNWjh03oAExjntTeElvL35TVtvYdbAFqBixuuD4aT3SwvajxJa_chcdGegcBNrrk8YVyC9lFGRCzUD1MCuXT9iTIfe9oUJT8iphOb0N7i9v0Qeb-zu1S3uh0cYBVPkC-8dvI83Eu1Q6Go48EoYOvRtP6l4PZUEzLIgWveYi4OcMiesV9NZwV0thWo81syFUaCI7Cf02LvwlAFns297lZGqTiUQrkacoolKlHM50sLaUKQyggM19VYQDBy84sh1aw7ueiKYUqWv5bxA6iFpYfEPs09xEDZEjGBLZQHkusI4ubMMZCzi_xt8orcF37nOJh7LGgorDu_ASTZbY4JB4Fn0uLjuAjl8WzEIMkkeTfYLqkm71l6eUQM9V8Mvq5m4c" charset="UTF-8"></script><style>
+		body{
+			margin: 0;
+			height: 100%;
+			background: #00b300;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	</style>
+</head>
+<body>
+<canvas width="800" height="400"
+id="game"></canvas>
+<script type="text/javascript">
+	const canvas = document.getElementById('game');
+	const ctx = canvas.getContext('2d');
+
+	const grid = 15;
+	const playerHeight = grid * 2;
+	const maxY = canvas.height-playerHeight-grid;
+	const maxX = canvas.width - grid - grid;
+
+	const playerSpeed = 7;
+	var ballSpeed = 4;
+
+	var scoreLeft = 0;
+	var scoreRight = 0;
+
+	const leftPlayer = {
+		x: grid*3,
+		y: canvas.height/2 - playerHeight/2,
+		width: grid,
+		height: playerHeight,
+		dx: 0,
+		dy: 0
+	};
+
+	const rightPlayer = {
+		x: canvas.width-grid*3,
+		y: canvas.height/2 -playerHeight/2,
+		width: grid,
+		height: playerHeight,
+		dx: 0,
+		dy: 0
+	};
+
+	const ball = {
+		x: canvas.width/2,
+		y: canvas.height/2,
+		width: grid*2,
+		height: grid*2,
+		resseting: false,
+		dx: ballSpeed,
+		dy: -ballSpeed
+	};
+	function collides(obj1, obj2){
+		return obj1.x < obj2.x + obj2.width &&
+		obj1.x +obj1.width > obj2.x &&
+		obj1.y < obj2.y + obj2.height &&
+		obj1.y + obj1.height > obj2.y;
+	}
+
+	function loop(){
+		requestAnimationFrame(loop);
+		ctx.clearRect(0, 0, canvas.width, 
+			canvas.height);
+		leftPlayer.y += leftPlayer.dy;
+		rightPlayer.y += rightPlayer.dy;
+		leftPlayer.x += leftPlayer.dx;
+		rightPlayer.x += rightPlayer.dx;
+
+		// выползнание за пределеы поля
+		if(leftPlayer.y < grid){
+			leftPlayer.y = grid;
+		}
+		else if(leftPlayer.x < grid){
+			leftPlayer.x = grid;
+		}
+		else if(leftPlayer.y > maxY){
+			leftPlayer.y = maxY;
+		}
+		else if(leftPlayer.x > maxX){
+			leftPlayer.x = maxX;
+		}
+
+		if(rightPlayer.y < grid){
+			rightPlayer.y = grid;
+		}
+		else if(rightPlayer.x < grid){
+			rightPlayer.x = grid;
+		}
+		else if(rightPlayer.y > maxY){
+			rightPlayer.y = maxY;
+		}
+		else if(rightPlayer.x > maxX){
+			rightPlayer.x = maxX;
+		}
+
+
+
+		// рисуем мяч
+		ctx.fillStyle = 'white';
+		ctx.arc(ball.x, ball.y, ball.width/2,
+		0, 2*Math.PI );
+		ctx.fill();
+		//белые линии
+		ctx.strokeStyle = 'white';
+		ctx.lineWidth = 5;
+		ctx.strokeRect(0, 0, canvas.width, canvas.height)
+		//центральная линия
+		ctx.beginPath();
+		ctx.moveTo(canvas.width / 2, 0);
+		ctx.lineTo(canvas.width / 2, canvas.height);
+		ctx.stroke();
+		//центральный круг
+		ctx.beginPath();
+		ctx.arc(canvas.width/2, canvas.height/2, 70, 0, Math.PI*2);
+		ctx.stroke();
+		//ворота
+		ctx.strokeStyle = '#ccc';
+		ctx.lineWidth = 40;
+		ctx.beginPath();
+		ctx.moveTo(0, canvas.height/2 - 100);
+		ctx.lineTo(0, canvas.height/2 + 100);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.moveTo(canvas.width, canvas.height/2 - 100);
+		ctx.lineTo(canvas.width, canvas.height/2 + 100);
+		ctx.stroke();
+
+		//маркеры углов поля
+		//левый верхний
+		ctx.beginPath();
+		ctx.arc(0, 0, 10, 0, Math.PI * 2);
+		ctx.fill();
+
+		//правый верхний
+		ctx.beginPath();
+		ctx.arc(canvas.width, 0, 10, 0, Math.PI * 2);
+		ctx.fill();
+
+		//левый нижний
+		ctx.beginPath();
+		ctx.arc(0, canvas.height, 10, 0, Math.PI * 2);
+		ctx.fill();
+
+		//правый  нижний
+		ctx.beginPath();
+		ctx.arc(canvas.width, canvas.height, 10, 0, Math.PI * 2);
+		ctx.fill();
+		//рисуем игроков
+		ctx.fillStyle = 'red';
+		ctx.fillRect(leftPlayer.x, leftPlayer.y, leftPlayer.width, leftPlayer.height);
+		ctx.fillStyle = 'blue';
+		ctx.fillRect(rightPlayer.x, rightPlayer.y, rightPlayer.width, rightPlayer.height);
+
+		//условие движения мяча
+		ball.x += ball.dx
+		ball.y += ball.dy
+
+		if(ball.y < grid){
+			ball.y = grid
+			ball.dy *= -1
+		}
+		else if (ball.y + grid > canvas.height - grid) {
+			ball.y = canvas.height - grid*2;
+			ball.dy *= -1
+		}
+		else if(ball.x < 0 && !ball.resseting){
+			ball.resseting = true;
+			scoreRight++;
+			setTimeout(()=>{
+				ball.resseting = false;
+				ball.x = canvas.width / 2;
+				ball.y = canvas.height / 2;
+
+			}, 3000);
+		}
+		else if(ball.x > canvas.width && !ball.resseting){
+			ball.resseting = true;
+			scoreLeft++;
+			setTimeout(()=>{
+				ball.resseting = false;
+				ball.x = canvas.width / 2;
+				ball.y = canvas.height / 2;
+
+			}, 3000);
+		}
+		if(collides(ball, leftPlayer)){
+			ball.dx *= -1;
+			ball.x = leftPlayer.x + leftPlayer.width;
+		}
+		else if(collides(ball, rightPlayer)){
+			ball.dx *= -1;
+			ball.x = rightPlayer.x - ball.width;
+		}
+		//отрисовка счета
+		ctx.fillStyle = 'black';
+		ctx.font = '25px Arial';
+		ctx.fillText('Score: leftPlayer: '+ scoreLeft +
+			' rightPlayer: ' + scoreRight, 10, 30);
+
+		if(scoreRight > 5){
+			alert('Right Player is WIN' 
+				+ scoreRight+ ':' +scoreLeft)
+			scoreRight = 0;
+			scoreLeft = 0;
+			leftPlayer.x = grid * 3;
+			leftPlayer.y = canvas.height / 2 - playerHeight / 2;
+			rightPlayer.x = canvas.width - grid*4;
+			rightPlayer.y = canvas.height / 2 - playerHeight / 2;
+		
+		setTimeout(()=>{
+			ball.resseting = false;
+			ball.x = canvas.width / 2;
+			ball.y = canvas.height / 2;
+		}, 2000);
+		}
+		else if(scoreLeft > 5){
+			alert('Left Player is WIN' 
+				+scoreLeft+ ':'+ scoreRight )
+			scoreRight = 0;
+			scoreLeft = 0;
+			leftPlayer.x = grid * 3;
+			leftPlayer.y = canvas.height / 2 - playerHeight / 2;
+			rightPlayer.x = canvas.width - grid*4;
+			rightPlayer.y = canvas.height / 2 - playerHeight / 2;
+		
+		setTimeout(()=>{
+			ball.resseting = false;
+			ball.x = canvas.width / 2;
+			ball.y = canvas.height / 2;
+		}, 2000);
+		}
+}
+		
+
+
+	document.addEventListener('keydown', function(e){
+
+		if(e.keyCode === 38){
+			rightPlayer.dy = -playerSpeed;
+		}
+		else if(e.keyCode === 40){
+			rightPlayer.dy = playerSpeed;
+		}
+		else if (e.keyCode === 37) {
+			rightPlayer.dx = -playerSpeed; 
+		}
+		else if(e.keyCode === 39){
+			rightPlayer.dx = playerSpeed;
+		}
+
+		//движение левого игрока
+		if(e.keyCode === 87){
+			leftPlayer.dy = -playerSpeed;
+		}
+		else if(e.keyCode === 83){
+			leftPlayer.dy = playerSpeed;
+		}
+		else if (e.keyCode === 65) {
+			leftPlayer.dx = -playerSpeed; 
+		}
+		else if(e.keyCode === 68){
+			leftPlayer.dx = playerSpeed;
+		}
+
+	});
+
+	document.addEventListener('keyup', function(e){
+		if(e.keyCode === 38 || e.keyCode === 40){
+			rightPlayer.dy = 0;
+		}
+		if(e.keyCode === 37 || e.keyCode === 39){
+			rightPlayer.dx = 0;
+		}
+		if(e.keyCode === 83 || e.keyCode === 87){
+			leftPlayer.dy = 0;
+		}
+		if(e.keyCode === 65 || e.keyCode === 68){
+			leftPlayer.dx = 0;
+		}
+
+
+	});
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
